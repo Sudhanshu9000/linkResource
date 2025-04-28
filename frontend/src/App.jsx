@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import profileImg from "./assets/myphoto1.png";
 import { FaLinkedin, FaYoutube, FaXTwitter, FaSitemap } from "react-icons/fa6";
 
@@ -8,15 +8,28 @@ const links = [
 ];
 
 export default function App() {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="bg-gray-800 rounded-3xl p-6 w-full max-w-sm shadow-lg">
         <div className="flex flex-col items-center">
-          <img
-            src={profileImg}
-            alt="Profile"
-            className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
-          />
+          <div className="relative w-24 h-24">
+            {!imageLoaded && (
+              <div className="absolute inset-0 bg-gray-700 rounded-full animate-pulse" />
+            )}
+            <img
+              src={profileImg}
+              alt="Profile"
+              className={`w-24 h-24 rounded-full border-4 border-white shadow-lg transition-opacity duration-300 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              loading="lazy"
+              width={96}
+              height={96}
+              onLoad={() => setImageLoaded(true)}
+            />
+          </div>
           <h1 className="mt-4 text-2xl font-bold text-white">Resources</h1>
           <div className="flex gap-4 mt-3 text-2xl text-white">
             <a href="https://www.linkedin.com/in/sudhanshu-mishra-b88298243/" target="_blank" rel="noopener noreferrer">
